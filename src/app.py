@@ -35,12 +35,13 @@ def clean(data):
     mapper = {"浦东区":"浦东新区", "闸北区区":"闸北区"}
     data["county"] = data["county"].replace(mapper)
     data = data.loc[data["county"].isin(area_list)].reset_index(drop=True)
+    data.dropna(subset=["createdAt"], inplace=True)
     
     return data
     
 def preprocess(data):
 
-    data["date"] = pd.to_datetime(data.createdAt)
+    data["date"] = pd.to_datetime(data["createdAt"])
     # data = data[["createdAt", "date", "county", "helpLevel", "type"]]
     for col in ["helpLevel", "type"]:
         for val in pd.unique(data[col]):
@@ -57,7 +58,7 @@ versionInfoPython = read_geojson()
 data = clean(data)
 data_af = preprocess(data)
 column_show = ['createdAt', 'county', 'helpLevel', 'type', 'tags', 'contentText']
-
+data = data[column_show]
 
 
 app = Dash(__name__)
@@ -94,7 +95,7 @@ app.layout = html.Div([
                     dbc.Col([
                         dash_table.DataTable(
                             id='table',
-                            columns=[{"name": col, "id": col, 'selectable': True if col != 'Name' else False} for col in column_show], 
+                            columns=[{"name": col, "id": col, 'selectable': True} for col in column_show], 
                             data=data.to_dict('records'),
                             style_cell={'padding': '5px',
                                         'overflow': 'hidden',
@@ -222,14 +223,15 @@ def display_choropleth(helplevel, typelevel):
     ]
     )
 
-def display_choropleth(helplevel, typelevel):
+def display_table(helplevel, typelevel):
     
     rst = data.copy()
     if helplevel != "helpLevel_全部":
         rst = data[data[helplevel.split("_")[0]] == helplevel.split("_")[1]]
     if typelevel != "type_全部":
         rst = rst[rst[typelevel.split("_")[0]] == typelevel.split("_")[1]]
-        
+    
+    # print(rst.columns)
     return rst.to_dict('records')
 
 
@@ -238,8 +240,8 @@ def display_choropleth(helplevel, typelevel):
     Input('table', "derived_virtual_data"),
     Input('table', "selected_columns"))
 def update_histogram(rows_dict, selected_columns):
-    rows = pd.DataFrame(rows_dict).copy()
     
+    rows = pd.DataFrame(rows_dict).copy()        
     rows["createdAt"] = pd.to_datetime(rows["createdAt"])
     rows["数量"] = 1
     # fig = px.area(rows.resample("15T", on="createdAt").aggregate({"数量":'count'})["数量"], title="每15分钟求救人数")
@@ -264,7 +266,7 @@ def update_histogram(rows_dict, selected_columns):
 
     # text = ",".join(list(rows["tags"]))
 
-    text = ",".join([x for x in list(rows["tags"]) if x])
+    text = ",".join([str(x) for x in list(rows["tags"]) if x])
     wordcloud = plotly_wordcloud(text)
 
     fig.add_trace(trend,1,1)
@@ -286,4 +288,4 @@ def update_histogram(rows_dict, selected_columns):
 #         tooltip='Name')
 #     return chart2.properties(width=320, height=320).to_html()
 
-app.run_server(debug=True)
+app.run_server(debug=False)
