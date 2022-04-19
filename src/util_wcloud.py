@@ -1,6 +1,5 @@
 from wordcloud import WordCloud, STOPWORDS
 import plotly.graph_objs as go
-from plotly.offline import init_notebook_mode, iplot
 
 def plotly_wordcloud(text):
     wc = WordCloud(stopwords = set(STOPWORDS),
