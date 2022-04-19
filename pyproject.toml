@@ -1,0 +1,16 @@
+[tool.poetry]
+name = "dashboard_omicron_SH"
+version = "0.1.0"
+description = "Because of Omicron, Shanghai is right now locked down. I love Shanghai because I was borned there. Also, I have seen so many informations online that is seeking for help. As a result, I want to build up a demo dashboard to monitor all those information and provide the visualization. God bless Shanghai."
+authors = ["Wenjia Zhu"]
+license = "MIT"
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.9"
+
+[tool.poetry.dev-dependencies]
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
