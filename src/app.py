@@ -63,6 +63,9 @@ data = data[column_show]
 
 app = Dash(__name__)
 
+server = app.server
+
+
 app.layout = html.Div([
     html.H4('上海各区疫情求助数据:'),
     html.P("求助等级:"),
