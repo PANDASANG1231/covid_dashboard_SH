@@ -65,7 +65,6 @@ app = Dash(__name__)
 
 server = app.server
 
-
 app.layout = html.Div([
     html.H4('上海各区疫情求助数据:'),
     html.P("求助等级:"),
@@ -290,5 +289,6 @@ def update_histogram(rows_dict, selected_columns):
 #         alt.Y('Horsepower'),
 #         tooltip='Name')
 #     return chart2.properties(width=320, height=320).to_html()
-
-app.run_server(debug=False, port=65500)
+if __name__ == '__main__':
+    
+    app.run_server(debug=False)
