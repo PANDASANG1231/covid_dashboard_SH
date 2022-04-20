@@ -9,7 +9,7 @@ import plotly.express as px
 from dash import Dash, dash_table, dcc, html, Input, Output
 import dash_bootstrap_components as dbc
 
-from util_wcloud import *
+from .util_wcloud import *
 
 
 
