@@ -15,16 +15,16 @@ from .util_wcloud import *
 
 def read_geojson():
     
-    if not os.path.exists("./data/geodata.json"):
+    if not os.path.exists("./src/data/geodata.json"):
         url = "https://geo.datav.aliyun.com/areas_v3/bound/310000_full.json"
         response = requests.get(url)
         versionInfo = response.text
         versionInfoPython = json.loads(versionInfo)
-        with open("./data/geodata.json", "w") as out_file:
+        with open("./src/data/geodata.json", "w") as out_file:
             json.dump(versionInfoPython, out_file, indent = 4)
             
     else:   
-        with open("./data/geodata.json", "r") as read_file:
+        with open("./src/data/geodata.json", "r") as read_file:
             versionInfoPython = json.load(read_file)
     
     return versionInfoPython
