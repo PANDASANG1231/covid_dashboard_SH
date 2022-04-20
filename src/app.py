@@ -288,4 +288,4 @@ def update_histogram(rows_dict, selected_columns):
 #         tooltip='Name')
 #     return chart2.properties(width=320, height=320).to_html()
 
-app.run_server(debug=False)
+app.run_server(debug=False， port=55723)
