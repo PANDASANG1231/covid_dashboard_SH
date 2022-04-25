@@ -15,9 +15,8 @@ Wenjia Zhu, Current student in the University of British Columbia.
   - Makefile: make start
   - Dockerfile:
     
-    1) docker pull zwj63518583/env_dashboard:latest
-
-    2) docker run --rm -it -v /$(pwd):/home zwj63518583/env_dashboard:latest make -C /home start
+    1. docker pull zwj63518583/env_dashboard:latest
+    2. docker run --rm -it -v /$(pwd):/home zwj63518583/env_dashboard:latest make -C /home start
 
 ## Contributing
 
