@@ -52,7 +52,7 @@ def preprocess(data):
     return data
 
 
-data = pd.read_excel("./src/helpothers.xlsx")
+data = pd.read_excel("./src/helpothers.xlsx", engine='openpyxl')
 versionInfoPython = read_geojson()
 data = clean(data)
 data_af = preprocess(data)
